@@ -13,10 +13,11 @@ choose_button2 = PySimpleGUI.FolderBrowse("Browse", key="selected_folder")
 name_file = PySimpleGUI.InputText(".zip", key="name_file")
 
 zip_button = PySimpleGUI.Button("Zip", button_color=("white", "purple"))
+message = PySimpleGUI.Text(key="message", text_color="purple")
 
 window = PySimpleGUI.Window("File Zipper", layout=[[select_files, input1, choose_button1],
                                                    [select_destinations, input2, choose_button2],
-                                                   [name_file, zip_button]])
+                                                   [name_file, zip_button, message]])
 while True:
     event_key, value = window.read()
 
@@ -28,6 +29,7 @@ while True:
             if ".zip" not in name:
                 name = name + ".zip"
             make_archive(filepaths, folder, name)
+            window["message"].update(value="Zipping successful!")
         case PySimpleGUI.WINDOW_CLOSED:
             break
 
